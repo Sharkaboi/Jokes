@@ -1,6 +1,6 @@
-# <p align="center"><img src="./assets/logo.png" width="40"/><br>Jokes</p>
+# <p align="center"><img src="./assets/Logo.png" width="40"/><br>Jokes</p>
 <p align="center">
-    <img src="https://github.com/Sharkaboi/Jokes/workflows/Gradle%20Build/badge.svg" alt="Gradle Build">
+    <img src="https://github.com/Sharkaboi/Jokes/workflows/Gradle%20build/badge.svg" alt="Gradle Build">
     <img src="https://img.shields.io/badge/Kotlin-1.4.20-blue" alt="Kotlin Version">
     <img src="https://img.shields.io/badge/Min%20API-23-green" alt="Min API">
     <img src="https://img.shields.io/badge/License-MIT-orange" alt="License">
@@ -9,7 +9,7 @@
 </p>
 
 ## Screenshots
-![](./assets/showcase.png)
+![](./assets/Showcase.png)
 
 ## Uses
 * Kotlin
