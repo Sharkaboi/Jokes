@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "0170816af31ac6bd32defaebdf773619",
+    "entities": [
+      {
+        "tableName": "jokes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`jokeId` INTEGER NOT NULL, `jokePunchline` TEXT NOT NULL, `jokeSetup` TEXT NOT NULL, `jokeType` TEXT NOT NULL, PRIMARY KEY(`jokeId`))",
+        "fields": [
+          {
+            "fieldPath": "jokeId",
+            "columnName": "jokeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "jokePunchline",
+            "columnName": "jokePunchline",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "jokeSetup",
+            "columnName": "jokeSetup",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "jokeType",
+            "columnName": "jokeType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "jokeId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0170816af31ac6bd32defaebdf773619')"
+    ]
+  }
+}
