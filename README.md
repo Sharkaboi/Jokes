@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/badge/Min%20API-23-green" alt="Min API">
     <img src="https://img.shields.io/badge/License-MIT-orange" alt="License">
     <img src="https://img.shields.io/github/contributors/sharkaboi/jokes" alt="Contributors"><br>
-    Simple Jokes app to display random jokes.
+    Simple app to display random jokes and save them offline.
 </p>
 
 ## Screenshots
