@@ -12,14 +12,14 @@ import com.cybershark.jokes.data.room.FavoriteJokeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object DataModule {
 
     @Provides
@@ -52,7 +52,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun getRetrofit(@ApplicationContext context: Context): JokeApiService {
+    fun getRetrofit(): JokeApiService {
         return Retrofit.Builder()
             .baseUrl(ApiConstants.apiEndpoint)
             .addConverterFactory(GsonConverterFactory.create())

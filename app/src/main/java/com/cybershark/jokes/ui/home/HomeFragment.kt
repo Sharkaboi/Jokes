@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.cybershark.jokes.R
 import com.cybershark.jokes.databinding.FragmentHomeBinding
+import com.cybershark.jokes.ui.home.util.JokeState
 import com.cybershark.jokes.util.UIState
 import com.cybershark.jokes.util.makeVisible
 import com.cybershark.jokes.util.observe

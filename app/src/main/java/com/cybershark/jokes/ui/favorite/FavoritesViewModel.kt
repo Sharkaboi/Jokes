@@ -1,17 +1,18 @@
 package com.cybershark.jokes.ui.favorite
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.cybershark.jokes.data.respositories.MainRepository
 import com.cybershark.jokes.data.room.JokeEntity
 import com.cybershark.jokes.util.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
 class FavoritesViewModel
-@ViewModelInject
+@Inject
 constructor(
-    @Assisted savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val mainRepository: MainRepository
 ) : ViewModel() {
 

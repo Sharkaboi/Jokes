@@ -18,10 +18,10 @@ internal fun View.shortSnackBar(
     message: String,
     action: (Snackbar.() -> Unit)? = null
 ) {
-    val snackbar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
-    action?.let { snackbar.it() }
-    snackbar.setAnchorView(R.id.bottomNavigation)
-    snackbar.show()
+    val snackBar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
+    action?.let { snackBar.it() }
+    snackBar.setAnchorView(R.id.bottomNavigation)
+    snackBar.show()
 }
 
 internal fun Snackbar.action(message: String, action: (View) -> Unit) {
