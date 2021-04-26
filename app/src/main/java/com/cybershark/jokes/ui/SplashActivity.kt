@@ -3,7 +3,9 @@ package com.cybershark.jokes.ui
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.cybershark.jokes.data.SharedPreferencesKeys
 import com.cybershark.jokes.util.launchAndFinishAffinity
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,11 +26,8 @@ class SplashActivity : AppCompatActivity() {
     private fun setTheme() {
         val isDarkTheme =
             sharedPreferences.getBoolean(SharedPreferencesKeys.THEME_OPTION_KEY, false)
-        if (isDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+
+        setDefaultNightMode(if (isDarkTheme) MODE_NIGHT_YES else MODE_NIGHT_NO)
     }
 
     private fun navigateToMainActivity() = launchAndFinishAffinity<MainActivity>()

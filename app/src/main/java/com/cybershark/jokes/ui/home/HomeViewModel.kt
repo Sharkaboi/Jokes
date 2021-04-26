@@ -31,18 +31,10 @@ constructor(
                     val jokeBody: Joke? = response.body()
                     jokeBody?.let { joke ->
                         val count = mainRepository.doesJokeExist(joke.id)
-                        if (count == 0) {
-                            // not favorite
-                            _currentJoke.value = JokeState(
-                                isJokeFavorite = false,
-                                joke = joke
-                            )
-                        } else {
-                            _currentJoke.value = JokeState(
-                                isJokeFavorite = true,
-                                joke = joke
-                            )
-                        }
+                        _currentJoke.value = JokeState(
+                            isJokeFavorite = count != 0,
+                            joke = joke
+                        )
                     }
                     _uiState.setSuccess("Joke fetched!")
                 } else {
