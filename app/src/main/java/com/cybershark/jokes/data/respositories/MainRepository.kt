@@ -7,7 +7,6 @@ import com.cybershark.jokes.data.room.FavoriteJokeDao
 import com.cybershark.jokes.data.room.JokeEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 class MainRepository(
     private val favoriteJokeDao: FavoriteJokeDao,
@@ -15,25 +14,50 @@ class MainRepository(
 ) {
     // Room functions
     val listOfJokes: LiveData<List<JokeEntity>> = favoriteJokeDao.getAllSavedJokes()
-    suspend fun saveJoke(jokeEntity: JokeEntity): Long = withContext(Dispatchers.IO) {
-        return@withContext favoriteJokeDao.saveJoke(jokeEntity)
+    suspend fun saveJoke(jokeEntity: JokeEntity): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            favoriteJokeDao.saveJoke(jokeEntity)
+            return@withContext Result.success(Unit)
+        } catch (e: Exception) {
+            return@withContext Result.failure(e)
+        }
     }
 
-    suspend fun removeJoke(jokeEntity: JokeEntity): Int = withContext(Dispatchers.IO) {
-        return@withContext favoriteJokeDao.removeJoke(jokeEntity)
+    suspend fun removeJoke(jokeEntity: JokeEntity): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            favoriteJokeDao.removeJoke(jokeEntity)
+            return@withContext Result.success(Unit)
+        } catch (e: Exception) {
+            return@withContext Result.failure(e)
+        }
     }
 
-    suspend fun deleteAllJokes(): Int = withContext(Dispatchers.IO) {
-        return@withContext favoriteJokeDao.deleteAllJokes()
+    suspend fun deleteAllJokes(): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            favoriteJokeDao.deleteAllJokes()
+            return@withContext Result.success(Unit)
+        } catch (e: Exception) {
+            return@withContext Result.failure(e)
+        }
     }
 
-    suspend fun doesJokeExist(jokeId: Int): Int = withContext(Dispatchers.IO) {
-        return@withContext favoriteJokeDao.doesJokeExist(jokeId)
+    suspend fun doesJokeExist(jokeId: Int): Result<Boolean> = withContext(Dispatchers.IO) {
+        try {
+            val count = favoriteJokeDao.doesJokeExist(jokeId)
+            return@withContext Result.success(count > 0)
+        } catch (e: Exception) {
+            return@withContext Result.failure(e)
+        }
     }
 
     // Retrofit Functions
-    suspend fun getRandomJoke(): Response<Joke> = withContext(Dispatchers.IO) {
-        return@withContext jokeApiService.getRandomJoke()
+    suspend fun getRandomJoke(): Result<Joke> = withContext(Dispatchers.IO) {
+        try {
+            val joke = jokeApiService.getRandomJoke()
+            return@withContext Result.success(joke)
+        } catch (e: Exception) {
+            return@withContext Result.failure(e)
+        }
     }
 
 }

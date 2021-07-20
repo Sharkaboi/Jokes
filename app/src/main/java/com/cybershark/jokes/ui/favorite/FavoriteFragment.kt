@@ -1,7 +1,6 @@
 package com.cybershark.jokes.ui.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cybershark.jokes.data.room.JokeEntity
 import com.cybershark.jokes.databinding.FragmentFavoritesBinding
-import com.cybershark.jokes.util.*
+import com.cybershark.jokes.util.UIState
+import com.cybershark.jokes.util.observe
+import com.cybershark.jokes.util.shortSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,7 +57,6 @@ class FavoriteFragment : Fragment() {
     }
 
     private val deleteJokeAction: (JokeEntity) -> Unit = { joke ->
-        Log.e("favoriteFragment", "delete clicked")
         favoritesViewModel.removeJoke(joke)
     }
 
@@ -66,17 +66,11 @@ class FavoriteFragment : Fragment() {
             favoritesAdapter.submitList(listOfJokes)
         }
         observe(favoritesViewModel.uiState) { uiState ->
+            binding.pbLoading.isVisible = uiState is UIState.Loading
             when (uiState) {
-                is UIState.Loading -> binding.pbLoading.makeVisible()
-                is UIState.Success -> {
-                    binding.pbLoading.makeGone()
-                    binding.root.shortSnackBar(uiState.message)
-                }
-                is UIState.Error -> {
-                    binding.pbLoading.makeGone()
-                    binding.root.shortSnackBar(uiState.message)
-                }
-                else -> binding.pbLoading.makeGone()
+                is UIState.Success -> binding.root.shortSnackBar(uiState.message)
+                is UIState.Error -> binding.root.shortSnackBar(uiState.message)
+                else -> Unit
             }
         }
     }

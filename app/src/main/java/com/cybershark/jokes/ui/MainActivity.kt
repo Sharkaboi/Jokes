@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
         val navController = findNavController(R.id.hostFragmentContainer)
         val appBarConfiguration = AppBarConfiguration(
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_favorites, R.id.navigation_settings
             )
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)
     }

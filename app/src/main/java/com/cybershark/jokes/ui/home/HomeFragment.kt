@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
@@ -11,7 +12,6 @@ import com.cybershark.jokes.R
 import com.cybershark.jokes.databinding.FragmentHomeBinding
 import com.cybershark.jokes.ui.home.util.JokeState
 import com.cybershark.jokes.util.UIState
-import com.cybershark.jokes.util.makeVisible
 import com.cybershark.jokes.util.observe
 import com.cybershark.jokes.util.shortSnackBar
 import com.github.razir.progressbutton.DrawableButton
@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindProgressButton(binding.btnGetJoke)
+        viewLifecycleOwner.bindProgressButton(binding.btnGetJoke)
         setupListeners()
         setupObservers()
     }
@@ -50,9 +50,9 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         observe(homeViewModel.uiState) { uiState: UIState ->
+            binding.btnGetJoke.isEnabled = uiState !is UIState.Loading
             when (uiState) {
                 is UIState.Loading -> {
-                    binding.btnGetJoke.isEnabled = false
                     binding.btnGetJoke.showProgress {
                         buttonText = "Loading"
                         gravity = DrawableButton.GRAVITY_TEXT_START
@@ -60,23 +60,20 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is UIState.Error -> {
-                    binding.btnGetJoke.isEnabled = true
                     binding.btnGetJoke.hideProgress(R.string.get_joke)
                     binding.root.shortSnackBar(uiState.message)
                 }
                 is UIState.Success -> {
-                    binding.btnGetJoke.isEnabled = true
                     binding.btnGetJoke.hideProgress(R.string.get_joke)
                     binding.root.shortSnackBar(uiState.message)
                 }
                 else -> {
-                    binding.btnGetJoke.isEnabled = true
                     binding.btnGetJoke.hideProgress(R.string.get_joke)
                 }
             }
         }
         observe(homeViewModel.currentJoke) { jokeState: JokeState ->
-            binding.cardJoke.makeVisible()
+            binding.cardJoke.isVisible = true
             binding.tvJokeSetupHome.text = jokeState.joke.setup
             binding.tvJokePunchlineHome.text = jokeState.joke.punchline
 

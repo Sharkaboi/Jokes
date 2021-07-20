@@ -1,31 +1,19 @@
-@file:Suppress("unused")
-
 package com.cybershark.jokes.util
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cybershark.jokes.R
 import com.google.android.material.snackbar.Snackbar
 
-internal fun View.shortSnackBar(
-    message: String,
-    action: (Snackbar.() -> Unit)? = null
-) {
+internal fun View.shortSnackBar(message: String) {
     val snackBar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
-    action?.let { snackBar.it() }
     snackBar.setAnchorView(R.id.bottomNavigation)
     snackBar.show()
-}
-
-internal fun Snackbar.action(message: String, action: (View) -> Unit) {
-    this.setAction(message, action)
 }
 
 internal inline fun <reified T : Activity> Activity.launchAndFinishAffinity(block: Intent.() -> Unit = {}) {
@@ -53,10 +41,8 @@ fun MutableLiveData<UIState>.setSuccess(message: String) =
 fun MutableLiveData<UIState>.setError(message: String) =
     this.apply { value = UIState.Error(message) }
 
-fun String?.getErrorString(): String = this ?: "Error occurred"
-
-fun View.makeVisible() = this.apply { isVisible = true }
-fun View.makeGone() = this.apply { isGone = true }
+fun MutableLiveData<UIState>.setError(throwable: Throwable?) =
+    this.apply { value = UIState.Error(throwable?.message ?: "An error occurred") }
 
 fun Fragment.openLink(url: String) {
     val intent = Intent()

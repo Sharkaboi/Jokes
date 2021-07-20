@@ -46,7 +46,7 @@ class FavoritesAdapter(
         holder.bindData(listDiffer.currentList[position])
     }
 
-    override fun getItemCount(): Int = listDiffer.currentList.count()
+    override fun getItemCount(): Int = listDiffer.currentList.size
 
     fun submitList(list: List<JokeEntity>) = listDiffer.submitList(list)
 }

@@ -2,7 +2,7 @@ package com.cybershark.jokes.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -34,12 +34,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupObservers() {
         observe(settingsViewModel.uiState) { uiState ->
             when (uiState) {
-                is UIState.Success -> {
-                    view?.shortSnackBar(uiState.message)
-                }
-                is UIState.Error -> {
-                    view?.shortSnackBar(uiState.message)
-                }
+                is UIState.Success -> view?.shortSnackBar(uiState.message)
+                is UIState.Error -> view?.shortSnackBar(uiState.message)
                 else -> Unit
             }
         }
@@ -73,11 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val themeOption =
             findPreference<SwitchPreferenceCompat>(SharedPreferencesKeys.THEME_OPTION_KEY)
         themeOption?.setOnPreferenceChangeListener { _, newValue ->
-            if (newValue as Boolean) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+            setDefaultNightMode(if (newValue as Boolean) MODE_NIGHT_YES else MODE_NIGHT_NO)
             true
         }
         findPreference<Preference>(SharedPreferencesKeys.DELETE_FAVORITES_KEY)?.setOnPreferenceClickListener {
